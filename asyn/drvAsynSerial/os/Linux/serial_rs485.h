@@ -16,9 +16,12 @@
   #define SER_RS485_RTS_ON_SEND     0x2
   #define SER_RS485_RTS_AFTER_SEND  0x4
   struct serial_rs485 {
-    int flags;
-    unsigned int delay_rts_before_send;
-    unsigned int delay_rts_after_send;
+    epicsUInt32 flags;
+    epicsUInt32 delay_rts_before_send;
+    epicsUInt32 delay_rts_after_send;
+    epicsUInt32 padding[5]; /* reserved, must be 0 */
+
+    xx
   };
 #endif
 
