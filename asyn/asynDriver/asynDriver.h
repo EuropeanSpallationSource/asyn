@@ -223,6 +223,7 @@ typedef struct  asynLockPortNotify {
 #define ASYN_TRACEINFO_PORT 0x0002
 #define ASYN_TRACEINFO_SOURCE 0x0004
 #define ASYN_TRACEINFO_THREAD 0x0008
+#define ASYN_TRACEINFO_NOPATH 0x0010
 
 /* asynPrint and asynPrintIO are macros that act like
    int asynPrint(asynUser *pasynUser,int reason, const char *format, ... ); 

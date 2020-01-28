@@ -472,6 +472,13 @@ static void reportConnectStatus(port *pport, portConnectStatus status, const cha
     }
 }
 
+static const char *asynStripPath(const char *file)
+{
+  const char *ret = strrchr(file, '/');
+  if (ret) return ret + 1;
+  return file;
+}
+
 static void asynInit(void)
 {
     int i;
@@ -2871,6 +2878,7 @@ static int traceVprintSource(asynUser *pasynUser,int reason, const char *file, i
     FILE     *fp;
 
     if(!(reason & ptracePvt->traceMask)) return 0;
+    if (ptracePvt->traceInfoMask & ASYN_TRACEINFO_NOPATH) file = asynStripPath(file);
     epicsMutexMustLock(pasynBase->lockTrace);
     fp = getTraceFile(pasynUser);
     if (ptracePvt->traceInfoMask & ASYN_TRACEINFO_TIME) nout += (int)printTime(fp);
@@ -2931,6 +2939,7 @@ static int traceVprintIOSource(asynUser *pasynUser,int reason,
     traceIOMask = ptracePvt->traceIOMask;
     traceTruncateSize = ptracePvt->traceTruncateSize;
     if(!(reason&traceMask)) return 0;
+    if (ptracePvt->traceInfoMask & ASYN_TRACEINFO_NOPATH) file = asynStripPath(file);
     epicsMutexMustLock(pasynBase->lockTrace);
     fp = getTraceFile(pasynUser);
     if (ptracePvt->traceInfoMask & ASYN_TRACEINFO_TIME) nout += (int)printTime(fp);
